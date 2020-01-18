@@ -12,7 +12,7 @@
     "org.freedesktop.Sdk.Extension.openjdk11"
   ],
   "finish-args": [
-    "--persist=.minecraft",
+
     /* X11 access */
     "--socket=x11",
     "--share=ipc",
@@ -24,27 +24,24 @@
     "--share=network",
     "--env=JAVA_HOME=/app/jre"
   ],
-  "build-options" : {
+  "build-options": {
     "append-path": "/usr/lib/sdk/openjdk11/bin"
   },
-  "modules": [
-    {
+  "modules": [{
       /* Needed by Minecraft 1.8.2 and up. */
       "name": "xrandr",
-      "sources": [
-        {
-          "type": "archive",
-          "url": "https://www.x.org/archive/individual/app/xrandr-1.5.0.tar.gz",
-          "sha256": "ddfe8e7866149c24ccce8e6aaa0623218ae19130c2859cadcaa4228d8bb4a46d"
-        }
-      ]
+      "sources": [{
+        "type": "archive",
+        "url": "https://www.x.org/archive/individual/app/xrandr-1.5.0.tar.gz",
+        "sha256": "ddfe8e7866149c24ccce8e6aaa0623218ae19130c2859cadcaa4228d8bb4a46d"
+      }]
     },
     {
       "name": "openjdk",
-        "buildsystem": "simple",
-        "build-commands": [
-          "/usr/lib/sdk/openjdk11/install.sh"
-        ]
+      "buildsystem": "simple",
+      "build-commands": [
+        "/usr/lib/sdk/openjdk11/install.sh"
+      ]
     },
     {
       "name": "minecraft",
@@ -58,26 +55,25 @@
         "install -Dp -m 644 com.mojang.Minecraft.png /app/share/icons/hicolor/256x256/apps/com.mojang.Minecraft.png",
         "install -Dp -m 644 com.mojang.Minecraft.appdata.xml /app/share/appdata/com.mojang.Minecraft.appdata.xml"
       ],
-      "sources" : [
-        {
+      "sources": [{
           "type": "extra-data",
           "filename": "Minecraft.tar.gz",
-          "url": "https://launcher.mojang.com/download/linux/x86_64/minecraft-launcher_2.1.9618.tar.gz",
-          "sha256": "7e6f057a932bfef49adbaf5f715ba5d367a225be6c3cc020dcded814492067f2",
-          "size": 70541150
+          "url": "https://launcher.mojang.com/download/linux/x86_64/minecraft-launcher_2.1.10835.tar.gz",
+          "sha256": "3cb6a63c18a6b40ed69ffaa6006c5b6fc3ab684556d15cfdc9a4cd10817afd1e",
+          "size": 73429399
         },
         {
           "type": "script",
           "dest-filename": "apply_extra",
           "commands": [
-              "tar -xf Minecraft.tar.gz",
-              "rm -f Minecraft.tar.gz"
+            "tar -xf Minecraft.tar.gz",
+            "rm -f Minecraft.tar.gz"
           ]
         },
         {
           "type": "script",
           "commands": [
-            "exec /app/extra/minecraft-launcher/minecraft-launcher $@"
+            "exec /app/extra/minecraft-launcher/minecraft-launcher --workDir $XDG_DATA_HOME/minecraft $@"
           ],
           "dest-filename": "minecraft"
         },
