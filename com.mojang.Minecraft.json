@@ -9,7 +9,7 @@
   "base-version": "stable",
   "tags": ["proprietary"],
   "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.openjdk11"
+    "org.freedesktop.Sdk.Extension.openjdk8"
   ],
   "finish-args": [
 
@@ -25,7 +25,7 @@
     "--env=JAVA_HOME=/app/jre"
   ],
   "build-options": {
-    "append-path": "/usr/lib/sdk/openjdk11/bin"
+    "append-path": "/usr/lib/sdk/openjdk8/bin"
   },
   "modules": [{
       /* Needed by Minecraft 1.8.2 and up. */
@@ -40,7 +40,7 @@
       "name": "openjdk",
       "buildsystem": "simple",
       "build-commands": [
-        "/usr/lib/sdk/openjdk11/install.sh"
+        "/usr/lib/sdk/openjdk8/install.sh"
       ]
     },
     {
@@ -96,6 +96,34 @@
         {
           "type": "file",
           "path": "com.mojang.Minecraft.appdata.xml"
+        }
+      ]
+    },
+    {
+      "name": "forge",
+      "buildsystem": "simple",
+      "build-commands": [
+        "install -Dm755 minecraft-forge-installer /app/bin/minecraft-forge-installer",
+        "rm /app/bin/minecraft",
+        "install -Dp -m 755 minecraft-forge.sh /app/bin/minecraft"
+      ],
+      "sources": [{
+          "type": "extra-data",
+          "filename": "forge-1.14.4-28.1.0-installer.jar",
+          "url": "https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.14.4-28.1.0/forge-1.14.4-28.1.0-installer.jar",
+          "sha256": "b2387668f96a126184179f50ffe395e1bf40d103e0471439e191912e2696be77",
+          "size": 7636842
+        },
+        {
+          "type": "script",
+          "dest-filename": "minecraft-forge-installer",
+          "commands": [
+            "/app/jre/bin/java -jar /app/extra/forge-1.14.4-28.1.0-installer.jar"
+          ]
+        },
+        {
+          "type": "file",
+          "path": "minecraft-forge.sh"
         }
       ]
     }
